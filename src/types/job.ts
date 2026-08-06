@@ -1,6 +1,4 @@
-import { JOB_STATUS } from "@/constants";
-
-export type JobStatus = (typeof JOB_STATUS)[keyof typeof JOB_STATUS];
+import type { JobStatus } from "@/constants";
 
 export interface Job {
   id: string;
@@ -10,7 +8,8 @@ export interface Job {
   createdAt: number;
 }
 
-export interface Column {
+export interface BoardColumn {
   id: JobStatus;
   title: string;
+  description?: string;
 }
