@@ -5,6 +5,8 @@ import { formatRelativeDate } from "@/lib";
 
 import type { Job } from "@/types";
 
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 import type { CSSProperties } from "react";
 
 interface JobCardProps {
@@ -16,9 +18,26 @@ interface JobCardProps {
  */
 export function JobCard({ job }: JobCardProps) {
 
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: job.id,
+    data: {
+      jobId: job.id,
+      currentStatus: job.status,
+    },
+  });
+
+  const style: CSSProperties = {
+    transform: CSS.Translate.toString(transform),
+  };
+
   return (
     <Card
-           className= "space-y-4 p-4"  >
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      className="cursor-grab space-y-4 p-4 active:cursor-grabbing"
+    >
       <div className="flex items-start gap-3">
         <BriefcaseBusiness className="mt-1 h-5 w-5 text-blue-600" aria-hidden="true" />
 

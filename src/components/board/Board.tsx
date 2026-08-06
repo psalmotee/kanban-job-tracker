@@ -4,13 +4,13 @@ import { BOARD_COLUMNS, type JobStatus } from "@/constants";
 import { groupJobsByStatus } from "@/lib";
 
 import type { DragEndEvent } from "@dnd-kit/core";
-import type { Job} from "@/types";
+import type { Job } from "@/types";
 
 import { BoardColumn } from "./BoardColumn";
 
 interface BoardProps {
   jobs: Job[];
-    moveJob: (jobId: string, status: JobStatus) => void;
+  moveJob: (jobId: string, status: JobStatus) => void;
 }
 
 export function Board({ jobs, moveJob }: BoardProps) {
@@ -21,15 +21,14 @@ export function Board({ jobs, moveJob }: BoardProps) {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
-    if (!over) {
-      return;
-    }
+    if (!over) return;
 
-    const jobId = String(active.id);
-    const newStatus = String(over.id) as JobStatus;
+    const jobId = active.data.current?.jobId as string;
+    const newStatus = over.id as JobStatus;
 
     moveJob(jobId, newStatus);
   }
+
   return (
     <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
       <div className="grid gap-6 lg:grid-cols-4">
