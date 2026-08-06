@@ -7,7 +7,7 @@ export interface Job {
   company: string;
   position: string;
   status: JobStatus;
-  createdAt: string;
+  createdAt: number;
 }
 
 export interface Column {
