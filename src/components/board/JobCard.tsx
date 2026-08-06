@@ -5,6 +5,8 @@ import { formatRelativeDate } from "@/lib";
 
 import type { Job } from "@/types";
 
+import type { CSSProperties } from "react";
+
 interface JobCardProps {
   job: Job;
 }
@@ -13,8 +15,10 @@ interface JobCardProps {
  * Displays a single job application.
  */
 export function JobCard({ job }: JobCardProps) {
+
   return (
-    <Card className="space-y-4 p-4">
+    <Card
+           className= "space-y-4 p-4"  >
       <div className="flex items-start gap-3">
         <BriefcaseBusiness className="mt-1 h-5 w-5 text-blue-600" aria-hidden="true" />
 
