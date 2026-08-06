@@ -5,12 +5,7 @@ import { Button, Input, Modal } from "@/components/ui";
 interface AddJobModalProps {
   open: boolean;
   onClose: () => void;
-  onSubmit: (values: AddJobFormValues) => void;
-}
-
-interface AddJobFormValues {
-  company: string;
-  position: string;
+  onSubmit: (company: string, position: string) => void;
 }
 
 interface FormValues {
@@ -18,7 +13,11 @@ interface FormValues {
   position: string;
 }
 
-export function AddJobModal({ open, onClose, onSubmit }: AddJobModalProps) {
+export function AddJobModal({
+  open,
+  onClose,
+  onSubmit,
+}: AddJobModalProps) {
   const {
     register,
     handleSubmit,
@@ -34,9 +33,14 @@ export function AddJobModal({ open, onClose, onSubmit }: AddJobModalProps) {
 
   return (
     <Modal open={open}>
-      <h2 className="mb-6 text-xl font-semibold">Add Job</h2>
+      <h2 className="mb-6 text-xl font-semibold">
+        Add Job
+      </h2>
 
-      <form onSubmit={handleSubmit(submit)} className="space-y-4">
+      <form
+        onSubmit={handleSubmit(submit)}
+        className="space-y-4"
+      >
         <div>
           <Input
             placeholder="Company"
@@ -45,7 +49,11 @@ export function AddJobModal({ open, onClose, onSubmit }: AddJobModalProps) {
             })}
           />
 
-          {errors.company && <p className="mt-1 text-sm text-red-500">{errors.company.message}</p>}
+          {errors.company && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.company.message}
+            </p>
+          )}
         </div>
 
         <div>
@@ -57,16 +65,25 @@ export function AddJobModal({ open, onClose, onSubmit }: AddJobModalProps) {
           />
 
           {errors.position && (
-            <p className="mt-1 text-sm text-red-500">{errors.position.message}</p>
+            <p className="mt-1 text-sm text-red-500">
+              {errors.position.message}
+            </p>
           )}
         </div>
 
         <div className="flex justify-end gap-3">
-          <Button type="button" variant="secondary" onClick={onClose}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onClose}
+          >
             Cancel
           </Button>
 
-          <Button type="submit" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+          >
             Add Job
           </Button>
         </div>

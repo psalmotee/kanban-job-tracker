@@ -1,20 +1,28 @@
-import { useState } from "react";
 import { nanoid } from "nanoid";
 
+import { JOB_STATUS, STORAGE_KEYS, type JobStatus } from "@/constants";
 import { initialJobs } from "@/data";
-import { JOB_STATUS, type JobStatus } from "@/constants";
-
+import { addJob as addJobToList, moveJob as moveJobToStatus } from "@/lib/jobs";
 import type { Job } from "@/types";
 
+import { useLocalStorage } from "./useLocalStorage";
+
 export function useJobs() {
-  const [jobs, setJobs] = useState<Job[]>(initialJobs);
+  const {
+    value: jobs,
+    setValue: setJobs,
+    loading,
+  } = useLocalStorage<Job[]>({
+    key: STORAGE_KEYS.JOBS,
+    initialValue: initialJobs,
+  });
 
   function moveJob(jobId: string, status: JobStatus) {
-    setJobs((previous) => previous.map((job) => (job.id === jobId ? { ...job, status } : job)));
+    setJobs((previous) => moveJobToStatus(previous, jobId, status));
   }
 
   function addJob(company: string, position: string) {
-    const newJob: Job = {
+    const job: Job = {
       id: nanoid(),
       company,
       position,
@@ -22,12 +30,13 @@ export function useJobs() {
       createdAt: Date.now(),
     };
 
-    setJobs((previous) => [newJob, ...previous]);
+    setJobs((previous) => addJobToList(previous, job));
   }
 
   return {
     jobs,
     moveJob,
     addJob,
+    loading,
   };
 }
