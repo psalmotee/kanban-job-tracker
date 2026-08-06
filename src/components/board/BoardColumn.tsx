@@ -3,6 +3,7 @@ import { Badge, EmptyState } from "@/components/ui";
 import type { BoardColumn as BoardColumnType, Job } from "@/types";
 
 import { JobCard } from "./JobCard";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 interface BoardColumnProps {
   column: BoardColumnType;
@@ -21,13 +22,15 @@ export function BoardColumn({ column, jobs }: BoardColumnProps) {
         <Badge>{jobs.length}</Badge>
       </header>
 
-      <div className="space-y-4">
-        {jobs.length === 0 ? (
-          <EmptyState title="No jobs" description="Add one or drag a card here." />
-        ) : (
-          jobs.map((job) => <JobCard key={job.id} job={job} />)
-        )}
-      </div>
+      <SortableContext items={jobs.map((job) => job.id)} strategy={verticalListSortingStrategy}>
+        <div className="space-y-4">
+          {jobs.length === 0 ? (
+            <EmptyState title="No jobs" description="Add one or drag a card here." />
+          ) : (
+            jobs.map((job) => <JobCard key={job.id} job={job} />)
+          )}
+        </div>
+      </SortableContext>
     </section>
   );
 }

@@ -19,3 +19,12 @@ export function groupJobsByStatus(jobs: Job[]) {
 
   return grouped;
 }
+
+export function moveJob(jobs: Job[], jobId: string, newStatus: string) {
+  return jobs.map((job) => {
+    if (job.id === jobId) {
+      return { ...job, status: newStatus };
+    }
+    return job;
+  });
+}

@@ -1,3 +1,5 @@
+import { DndContext, PointerSensor, closestCorners, useSensor, useSensors } from "@dnd-kit/core";
+
 import { BOARD_COLUMNS } from "@/constants";
 import { groupJobsByStatus } from "@/lib";
 
@@ -9,17 +11,22 @@ interface BoardProps {
   jobs: Job[];
 }
 
-/**
- * Renders the Kanban board.
- */
 export function Board({ jobs }: BoardProps) {
   const groupedJobs = groupJobsByStatus(jobs);
 
+  const sensors = useSensors(useSensor(PointerSensor));
+
+  function handleDragEnd() {
+    console.log("Dropped");
+  }
+
   return (
-    <div className="grid gap-6 lg:grid-cols-4">
-      {BOARD_COLUMNS.map((column) => (
-        <BoardColumn key={column.id} column={column} jobs={groupedJobs[column.id]} />
-      ))}
-    </div>
+    <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+      <div className="grid gap-6 lg:grid-cols-4">
+        {BOARD_COLUMNS.map((column) => (
+          <BoardColumn key={column.id} column={column} jobs={groupedJobs[column.id]} />
+        ))}
+      </div>
+    </DndContext>
   );
 }
