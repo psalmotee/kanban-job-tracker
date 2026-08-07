@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useJobs } from "@/hooks/useJobs";
-import { Container, Header } from "@/components/layout";
-import { AddJobModal } from "./components/modal";
+
 import { Board, BoardSkeleton } from "@/components/board";
+import { Container, Header } from "@/components/layout";
+import { AddJobModal } from "@/components/modal";
+import { useJobs } from "@/hooks/useJobs";
 
 export default function App() {
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { jobs, moveJob, addJob, loading } = useJobs();
+  const { jobs, moveJob, addJob, deleteJob, loading } = useJobs();
 
   if (loading) {
     return (
@@ -22,7 +22,9 @@ export default function App() {
   return (
     <Container>
       <Header onAddJob={() => setIsModalOpen(true)} />
-      <Board jobs={jobs} moveJob={moveJob} />
+
+      <Board jobs={jobs} moveJob={moveJob} onDelete={deleteJob} />
+
       <AddJobModal open={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={addJob} />
     </Container>
   );

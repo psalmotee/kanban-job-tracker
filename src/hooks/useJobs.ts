@@ -2,7 +2,11 @@ import { nanoid } from "nanoid";
 
 import { JOB_STATUS, STORAGE_KEYS, type JobStatus } from "@/constants";
 import { initialJobs } from "@/data";
-import { addJob as addJobToList, moveJob as moveJobToStatus } from "@/lib/jobs";
+import {
+  addJob as addJobToList,
+  deleteJob as deleteJobFromList,
+  moveJob as moveJobToStatus,
+} from "@/lib/jobs";
 import type { Job } from "@/types";
 
 import { useLocalStorage } from "./useLocalStorage";
@@ -33,10 +37,15 @@ export function useJobs() {
     setJobs((previous) => addJobToList(previous, job));
   }
 
+  function deleteJob(jobId: string) {
+    setJobs((previous) => deleteJobFromList(previous, jobId));
+  }
+
   return {
     jobs,
     moveJob,
     addJob,
+    deleteJob,
     loading,
   };
 }
