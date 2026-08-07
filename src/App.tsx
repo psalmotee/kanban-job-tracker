@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Board } from "@/components/board";
-import { Container, Header } from "@/components/layout";
 import { useJobs } from "@/hooks/useJobs";
+import { Container, Header } from "@/components/layout";
 import { AddJobModal } from "./components/modal";
-import { BoardSkeleton } from "@/components/board";
+import { Board, BoardSkeleton } from "@/components/board";
 
 export default function App() {
 
@@ -23,8 +22,8 @@ export default function App() {
   return (
     <Container>
       <Header onAddJob={() => setIsModalOpen(true)} />
-      <AddJobModal open={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={addJob} />
       <Board jobs={jobs} moveJob={moveJob} />
+      <AddJobModal open={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={addJob} />
     </Container>
   );
 }
