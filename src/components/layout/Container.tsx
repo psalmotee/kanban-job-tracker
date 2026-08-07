@@ -1,10 +1,13 @@
-import type { PropsWithChildren } from "react";
+interface ContainerProps {
+  children: React.ReactNode;
+}
 
-/**
- * Centers page content and applies consistent horizontal padding.
- */
-export function Container({ children }: PropsWithChildren) {
+export function Container({ children }: ContainerProps) {
   return (
-    <main className="mx-auto w-full max-w-screen-2xl px-4 py-8 sm:px-6 lg:px-8">{children}</main>
+    <main className="min-h-screen bg-slate-100">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        {children}
+      </div>
+    </main>
   );
 }

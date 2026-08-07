@@ -34,7 +34,22 @@ export function Board({ jobs, moveJob, onDelete }: BoardProps) {
     }
 
     const jobId = String(active.id);
-    const newStatus = over.id as JobStatus;
+
+    const overType = over.data.current?.type;
+
+    let newStatus: JobStatus | undefined;
+
+    if (overType === "column") {
+      newStatus = over.data.current?.status as JobStatus;
+    }
+
+    if (overType === "job") {
+      newStatus = over.data.current?.job?.status as JobStatus;
+    }
+
+    if (!newStatus) {
+      return;
+    }
 
     moveJob(jobId, newStatus);
   }
