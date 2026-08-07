@@ -13,7 +13,8 @@ export default function App() {
   if (loading) {
     return (
       <Container>
-        <Header onAddJob={() => {}} />
+        <Header onAddJob={() => undefined} />
+
         <BoardSkeleton />
       </Container>
     );
